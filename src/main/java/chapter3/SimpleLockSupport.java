@@ -3,7 +3,7 @@ package chapter3;
 import java.util.concurrent.locks.LockSupport;
 
 public class SimpleLockSupport {
-    public static Object u = new Object();
+    public static Sin u = new Sin();
     static ChangeObjectThread t1 = new ChangeObjectThread("t1");
     static ChangeObjectThread t2 = new ChangeObjectThread("t2");
 
@@ -18,6 +18,7 @@ public class SimpleLockSupport {
                 System.out.println("in " + getName());
                 LockSupport.park();
             }
+            System.out.println(getName() + "\texit");
         }
     }
 
@@ -33,5 +34,9 @@ public class SimpleLockSupport {
         t2.join();
     }
 
+
+    public static class Sin {
+
+    }
 
 }

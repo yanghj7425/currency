@@ -2,8 +2,11 @@ package chapter3;
 
 import java.util.concurrent.locks.LockSupport;
 
+/**
+ * 线程阻塞类工具 LockSupport
+ */
 public class SimpleLockSupport {
-    public static Sin u = new Sin();
+    public static Object u = new Object();
     static ChangeObjectThread t1 = new ChangeObjectThread("t1");
     static ChangeObjectThread t2 = new ChangeObjectThread("t2");
 
@@ -16,6 +19,9 @@ public class SimpleLockSupport {
         public void run() {
             synchronized (u) {
                 System.out.println("in " + getName());
+                /**
+                 * 阻塞当前线程，阻塞后线程是 WAITING 状态，不会像 suspend  处于 RUNNABLE 状态
+                 */
                 LockSupport.park();
             }
             System.out.println(getName() + "\texit");
@@ -33,10 +39,4 @@ public class SimpleLockSupport {
         t1.join();
         t2.join();
     }
-
-
-    public static class Sin {
-
-    }
-
 }

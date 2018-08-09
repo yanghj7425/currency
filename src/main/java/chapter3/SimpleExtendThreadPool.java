@@ -53,19 +53,22 @@ public class SimpleExtendThreadPool {
             }
         };
 
-        for (int i = 0; i < 15; i++) {
-            MyTask myTask = new MyTask("task" + i + (System.currentTimeMillis() / 274));
+//        for (int i = 0; i < 15; i++) {
+//            MyTask myTask = new MyTask("task" + i + (System.currentTimeMillis() / 274));
+//
+//            service.execute(myTask);
+//
+//            try {
+//                Thread.sleep(500);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        service.shutdown();
+//
 
-            service.execute(myTask);
-
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
-        service.shutdown();
+        System.out.println(Runtime.getRuntime().availableProcessors());
 
     }
 }

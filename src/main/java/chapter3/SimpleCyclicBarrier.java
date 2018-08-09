@@ -3,6 +3,9 @@ package chapter3;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
+/**
+ * 循环栅，凑够一定数量的线程后执行指定的动作（实现 Runnable 接口）
+ */
 public class SimpleCyclicBarrier {
 
 	public static class Soldier implements Runnable {

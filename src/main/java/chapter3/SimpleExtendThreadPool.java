@@ -27,7 +27,6 @@ public class SimpleExtendThreadPool {
                 e.printStackTrace();
             }
         }
-
         private String getThreadName() {
             return threadName;
         }

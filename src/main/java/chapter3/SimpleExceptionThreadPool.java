@@ -3,6 +3,7 @@ package chapter3;
 import java.util.concurrent.*;
 
 public class SimpleExceptionThreadPool {
+
     private static class DivTask implements Runnable {
         int a, b;
 
@@ -10,7 +11,6 @@ public class SimpleExceptionThreadPool {
             this.a = a;
             this.b = b;
         }
-
 
         @Override
         public void run() {
@@ -20,7 +20,7 @@ public class SimpleExceptionThreadPool {
     }
 
     /**
-     *
+     * 定位异常栈
      */
     private static class TraceThreadExceptionPool extends ThreadPoolExecutor {
 
@@ -55,20 +55,27 @@ public class SimpleExceptionThreadPool {
                 }
             };
         }
-
     }
 
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         ThreadPoolExecutor pools = new ThreadPoolExecutor(0, Integer.MAX_VALUE, 0L, TimeUnit.SECONDS, new SynchronousQueue<>());
+        /**
+         * 直接用 submit 提交会吞食异常信息,需要获取 future 返回值 并 get
+         * 或者 改为 execute 但是仍然不能看出任务在哪儿提交的
+         */
         for (int i = 0; i < 5; i++) {
-
-            /**
-             * 直接用 submit 提交会吞食异常信息,需要获取 future 返回值 并 get
-             * 或者 改为 execute 但是仍然不能看出任务在哪儿提交的
-             */
             Future<?> future = pools.submit(new DivTask(100, i));
             future.get();
+        }
+        System.out.println("************************");
+
+        /**
+         * 会显示出该任务在何处被提交
+         */
+        TraceThreadExceptionPool traceThreadExceptionPool = new TraceThreadExceptionPool(0, Integer.MAX_VALUE, 0L, TimeUnit.SECONDS, new SynchronousQueue<>());
+        for (int i = 0; i < 5; i++) {
+            traceThreadExceptionPool.submit(new DivTask(100, i));
         }
     }
 }
